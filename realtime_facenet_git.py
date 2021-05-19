@@ -27,17 +27,17 @@ import datetime
 
 # 현재 시간
 now = datetime.datetime.now()
-nowDate = str(now.strftime('%Y-%m-%d'))
+nowDate = str(now.strftime('%Y%m%d'))
 nowTime = str(now.strftime('%H:%M:%S'))
 
 # DB 생성 (오토 커밋)
 subject = input('과목명 입력: ')
-db_name = './DB/' + nowDate + '_' + subject + '.db'
+db_name = './DB/' + subject + '.db'
 conn = sqlite3.connect(db_name, isolation_level=None)
 # 커서 획득
 cur = conn.cursor()
 # 테이블 생성 (데이터 타입은 TEST, NUMERIC, INTEGER, REAL, BLOB 등)
-cur.execute("CREATE TABLE IF NOT EXISTS attendance(id text PRIMARY KEY, currentTime text)")
+cur.execute("CREATE TABLE IF NOT EXISTS D" + nowDate + " (id text PRIMARY KEY, currentTime text)")
 
 print('Creating networks and loading parameters')
 with tf.Graph().as_default():
@@ -171,7 +171,6 @@ with tf.Graph().as_default():
                     cur.execute("INSERT INTO attendance VALUES (?, ?)", atd)
 
                     print('Successfully'+ result_names + nowTime)
-                break
 
         video_capture.release()
         # #video writer
